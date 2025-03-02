@@ -1,4 +1,4 @@
-# PostgreSQL Security Best Practices Checklist
+# PostgreSQL Security Checklist
 
 ## 1. **User & Role Management**
 
@@ -6,11 +6,6 @@
 - **Principle of Least Privilege**: Assign the minimal required privileges to each user.
 - **Role-Based Access Control (RBAC)**: Use roles to group users and assign privileges accordingly.
 - **Restrict Role Inheritance**: Ensure users only inherit necessary privileges.
-- **Revoke Public Schema Access**:
-  - Remove `CREATE` and `USAGE` privileges from the `public` schema to prevent unauthorized object creation (`CVE-2018-1058`) and table viewing.
-  - Revoke the ability to connect to the database unless explicitly required.
-  - Restrict access to system catalogs like `pg_proc` and `pg_get_functiondef()`.
-  - Ensure `public` has no default access to schemas, tables, or functions.
 
 ## 2. **Authentication & Connection Security**
 
@@ -44,7 +39,7 @@
 ## 4. **Schema & Object Security**
 
 - **Use Separate Schemas for Different Privileges**:
-  - Store end-user tables/functions in a dedicated schema (not `public`).
+  - Store end-user tables/functions in a dedicated schemas (not `public`).
 - **Define Default Search Paths**:
   - Set the default search path to include only the necessary schemas.
 - **Restrict Function Access**:
@@ -53,13 +48,19 @@
 - **Ensure Proper Ownership**:
   - Avoid granting object ownership to regular users to prevent privilege escalation.
 
+- **Revoke Public Schema Access**:
+  - Ensure `public` has no default access to schemas, tables, or functions. 
+  - Remove `CREATE` and `USAGE` privileges from the `public` schema to prevent unauthorized object creation (`CVE-2018-1058`) and table viewing.
+  - Revoke the ability to connect to the database unless explicitly required.
+  - Restrict access to system catalogs like `pg_proc` and `pg_get_functiondef()`.
+
 ## 5. **Access Control & Privilege Management**
 
 - **Grant Only Necessary Privileges**:
   - Create roles with minimal privileges (`CONNECT`, `SELECT`, etc.).
   - Ensure users do not own objects unless explicitly required.
 - **Implement Role-Based Login Restrictions**:
-  - Use roles without login capabilities for privilege management.
+  - Use roles without login capabilities for privilege management ("basic_user")
   - Create login-enabled roles that inherit necessary permissions.
 - **Revoke Unnecessary Privileges**:
   - Remove privileges that allow users to see other roles (`pg_roles`).
