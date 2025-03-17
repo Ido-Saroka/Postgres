@@ -65,7 +65,12 @@
 - **Revoke Unnecessary Privileges**:
   - Remove privileges that allow users to see other roles (`pg_roles`).
 
-## 6. **Ongoing Maintenance & Compliance**
+## 6. **Additional Security Considerations**
+
+- **Row-Level Security (RLS)**:
+  - RLS restricts access to rows in a table based on user roles, ideal for multi-tenant applications, compliance needs (GDPR, HIPAA), and internal segmentation. While it enhances security, it may introduce performance overhead, especially on large datasets with complex policies, so testing is recommended.
+
+## 7. **Ongoing Maintenance & Compliance**
 
 - **Regularly Update PostgreSQL**:
   - Stay up to date with security patches and major version upgrades.
